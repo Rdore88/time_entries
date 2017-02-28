@@ -41,6 +41,10 @@ class SqlTest < Minitest::Test
     assert_equal [176, "West Group"], db.execute(sql).first
   end
 
+  def test_lupe_most_hours_worked_for_client
+    sql = "SELECT SUM(duration), developers.name, clients.name FROM developers INNER JOIN time_entries ON developers.id = time_entries.developer_id INNER JOIN projects ON time_entries.project_id = projects.id INNER JOIN clients ON projects.client_id = clients.id WHERE developers.name = 'Mrs. Lupe Schowalter' GROUP BY clients.id ORDER BY SUM(duration) DESC LIMIT 1"
+    p db.execute(sql)
+  end
 
 
 end
