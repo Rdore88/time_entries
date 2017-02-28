@@ -67,4 +67,11 @@ class SqlTest < Minitest::Test
     assert_equal 13, db.execute(sql).length
   end
 
+  def test_developers_who_have_at_least_five_comments
+    sql = "SELECT developers.name FROM developers LEFT JOIN comments
+    ON developers.id = comments.developer_id GROUP BY comments.developer_id HAVING COUNT(comments.developer_id) >= 5"
+    assert_equal ["Joelle Hermann"], db.execute(sql).first
+  end
+
 end
+# , developers.name
