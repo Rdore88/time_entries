@@ -46,10 +46,10 @@ class SqlTest < Minitest::Test
     assert_equal [11, "Mrs. Lupe Schowalter", "Kuhic-Bartoletti"], db.execute(sql).first
   end
 
-  # def test_client_names_and_project_names
-  #   sql = ""
-  #   p db.execute(sql)
-  # end
+  def test_client_names_and_project_names
+    sql = "SELECT clients.name, projects.name FROM clients LEFT JOIN projects ON clients.id = projects.client_id"
+    assert_equal 33, db.execute(sql).length
+  end
 
 
 end
