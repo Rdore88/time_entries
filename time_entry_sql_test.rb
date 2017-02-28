@@ -73,5 +73,13 @@ class SqlTest < Minitest::Test
     assert_equal ["Joelle Hermann"], db.execute(sql).first
   end
 
+  def test_who_worked_least_in_january
+    sql = "SELECT SUM(duration), developers.name FROM time_entries INNER JOIN developers
+    ON time_entries.developer_id=developers.id WHERE worked_on >= '2015-01-01' AND worked_on <= '2015-01-31'
+    GROUP BY developers.name ORDER BY SUM(duration) ASC LIMIT 1"
+    assert_equal [0, "Ms. Tremayne Kuhn"], db.execute(sql).first
+  end
+
 end
-# , developers.name
+
+# WHERE MONTH() = 1 and YEAR(2015) =2015
