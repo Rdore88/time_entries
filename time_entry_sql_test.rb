@@ -28,8 +28,12 @@ class SqlTest < Minitest::Test
 
   def test_find_all_time_entries_and_show_each_ones_client_name_next_to_it
     sql = "SELECT clients.name, time_entries.id, developer_id, project_id, worked_on, duration, time_entries.created_at, time_entries.updated_at FROM time_entries INNER JOIN projects ON time_entries.project_id = projects.id INNER JOIN clients ON projects.client_id = clients.id"
-    p db.execute(sql)
     assert_equal ["Eichmann, Altenwerth and Morar", 1, 1, 24, "2014-07-20", 5, "2015-07-14 16:15:18.437386", "2015-07-14 16:15:18.437386"], db.execute(sql).first
+  end
+
+  def test_find_all_developers_in_the_Ohio_sheep_group
+    sql = "SELECT developers.name FROM developers INNER JOIN group_assignments ON developers.id = group_assignments.developer_id INNER JOIN groups ON group_assignments.group_id = groups.id WHERE groups.name = 'Ohio sheep'"
+    assert_equal ["Bruce Wisoky Jr."], db.execute(sql).first
   end
 
 end
