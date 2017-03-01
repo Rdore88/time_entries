@@ -80,6 +80,10 @@ class SqlTest < Minitest::Test
     assert_equal [0, "Ms. Tremayne Kuhn"], db.execute(sql).first
   end
 
+  def test_find_entries_by_developers_not_assigned_to_project
+    sql = "SELECT time_entries.id, developers.name, project_assignments.project_id FROM developers INNER JOIN time_entries
+    ON developers.id = time_entries.developer_id INNER JOIN project_assignments WHERE
+    time_entries.project_id = project_assignments.project_id & time_entries.developer_id = project_assignments.developer_id"
+    assert_equal [62, "Ms. Tremayne Kuhn", 2], db.execute(sql).first
+  end
 end
-
-# WHERE MONTH() = 1 and YEAR(2015) =2015
